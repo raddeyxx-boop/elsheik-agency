@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/agency-logo.png'
 
 const links = [
-  ['اختبار اللغة', 'english-test'],
   ['الرئيسية', 'home'], ['من أنا', 'about'], ['خدماتنا', 'services'],
   ['الوجهات الدراسية', 'study-destinations'],
-  ['الكليات', 'colleges'], ['خطوات التسجيل', 'steps'], ['تواصل معنا', 'contact'],
+  ['الكليات', 'colleges'], ['خطوات التسجيل', 'steps'], ['اختبار اللغة', 'english-test'],
+  ['تواصل معنا', 'contact'],
 ]
 
 export default function Header() {
