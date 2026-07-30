@@ -1,0 +1,10 @@
+import { useEffect, useState } from 'react'
+import { BarChart3, Headphones, PenLine, Settings } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+const labels={overview:'نظرة عامة',questions:'أسئلة الاستماع',writing:'مهمة الكتابة',results:'نتائج الطلاب',settings:'إعدادات الاختبار'} as const
+export default function AdminEnglishTestPage({view}:{view:keyof typeof labels}){
+ const[data,setData]=useState<Record<string,unknown>[]>([]),[error,setError]=useState('')
+ useEffect(()=>{if(!supabase)return;const table=view==='results'?'english_test_results':'english_test_questions';supabase.from(table).select('*').order('created_at',{ascending:false}).then(({data,error})=>{if(error)setError('تعذر تحميل بيانات الاختبار.');else setData(data||[])})},[view])
+ return <div className="dash-content"><div className="dash-title"><div><span>اختبار اللغة الإنجليزية</span><h1>{labels[view]}</h1><small>إدارة محتوى الاختبار والنتائج بأمان</small></div></div><nav className="admin-test-tabs">{(Object.keys(labels)as(keyof typeof labels)[]).map(k=><Link key={k} className={k===view?'active':''} to={`/admin/english-test${k==='overview'?'':`/${k}`}`}>{labels[k]}</Link>)}</nav>{error&&<p className="test-error">{error}</p>}{view==='overview'&&<div className="stats"><article><span><BarChart3/></span><div><small>السجلات المتاحة</small><strong>{data.length}</strong></div></article><article><span><Headphones/></span><div><small>مدة الاختبار</small><strong>8 دقائق</strong></div></article><article><span><PenLine/></span><div><small>المهارات</small><strong>2</strong></div></article><article><span><Settings/></span><div><small>حالة التقييم</small><strong>آمن</strong></div></article></div>}{view!=='overview'&&<div className="dash-card admin-test-list">{data.length?data.map((row,i)=><article key={String(row.id||i)}><strong>{String(row.question_text||row.estimated_level||'سجل اختبار')}</strong><span>{String(row.section||row.overall_score||'')}</span></article>):<div className="admin-empty">لا توجد بيانات متاحة حاليًا. طبّق ترحيل قاعدة البيانات ثم أضف المحتوى المطلوب.</div>}</div>}</div>
+}

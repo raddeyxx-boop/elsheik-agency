@@ -1,0 +1,139 @@
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { Award, BriefcaseBusiness, CheckCircle2, ClipboardCheck, FileCheck2, GraduationCap, HeartHandshake, Lightbulb, Map, MessageCircle, School, Search, Send, Sparkles, Users } from 'lucide-react'
+import Header from '../components/Header'
+import SectionTitle from '../components/SectionTitle'
+import CollegeCard from '../components/CollegeCard'
+import CollegeModal from '../components/CollegeModal'
+import RegistrationForm from '../components/RegistrationForm'
+import StudyDestinationsSection from '../components/study-destinations/StudyDestinationsSection'
+import GlobalStudyGlobe from '../components/hero/GlobalStudyGlobe'
+import Footer from '../components/Footer'
+import WhatsAppButton from '../components/WhatsAppButton'
+import aliPhoto from '../assets/ali-elsheik.jpg'
+import { getColleges } from '../services/data'
+import type { College } from '../types'
+import { Link } from 'react-router-dom'
+import { getStoredSession } from '../services/englishTest'
+
+const services = [
+  [Lightbulb, 'الاستشارات التعليمية', 'نساعد الطالب على فهم الخيارات المتاحة واختيار المسار التعليمي المناسب.'],
+  [Search, 'اختيار الجامعة والتخصص', 'نقارن بين الخيارات بناءً على اهتمامات الطالب وميزانيته وأهدافه.'],
+  [FileCheck2, 'التقديم والقبول الجامعي', 'نساعد في تجهيز الطلبات والمستندات ومتابعة إجراءات القبول.'],
+  [School, 'التسجيل في الكليات', 'نقدم الدعم الكامل لإتمام التسجيل في الكلية أو الجامعة المختارة.'],
+  [HeartHandshake, 'متابعة الطالب', 'نتابع مع الطالب منذ بداية الطلب وحتى إتمام إجراءات القبول.'],
+  [Map, 'الدراسة في بنغالور', 'نوفر إرشادات للطلاب الراغبين في الدراسة بمدينة بنغالور في الهند.'],
+]
+const benefits = ['معرفة مباشرة بالحياة والدراسة في بنغالور', 'إرشاد شخصي لكل طالب', 'معلومات واضحة وموثوقة', 'متابعة مستمرة لطلبات التسجيل', 'مساعدة الطالب وولي الأمر في اتخاذ القرار', 'دعم سريع عبر واتساب']
+const steps = [
+  [Send, 'أرسل بياناتك', 'عرّفنا بطموحك واحتياجاتك'],
+  [GraduationCap, 'اختر الكلية والتخصص', 'نستكشف الخيارات المناسبة معًا'],
+  [Users, 'راجع الخيارات', 'جلسة واضحة مع المستشار'],
+  [ClipboardCheck, 'جهّز المستندات', 'نتأكد من اكتمال ملفك'],
+  [FileCheck2, 'قدّم طلب القبول', 'نرافقك أثناء التقديم'],
+  [Award, 'تابع حالة طلبك', 'نبقى معك حتى اكتمال الرحلة'],
+]
+
+export default function HomePage() {
+  const englishCourse = new URLSearchParams(window.location.search).get('englishCourse') === '1'
+  const [colleges, setColleges] = useState<College[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const [selected, setSelected] = useState<College | null>(null)
+  const [selectedName, setSelectedName] = useState(englishCourse ? 'وكالة الشيخ التعليمية' : '')
+  const [selectedCountry, setSelectedCountry] = useState('')
+  const [registrationSource, setRegistrationSource] = useState<'public_form' | 'english_test' | 'study_destination'>(englishCourse ? 'english_test' : 'public_form')
+  const load = () => {
+    setLoading(true); setError(false)
+    getColleges().then(setColleges).catch(() => setError(true)).finally(() => setLoading(false))
+  }
+  useEffect(load, [])
+  const registerFor = (name: string) => {
+    setSelected(null); setSelectedName(name); setRegistrationSource(englishCourse ? 'english_test' : 'public_form')
+    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 50)
+  }
+  const registerForDestination = (countryName: string) => {
+    setSelectedCountry(countryName)
+    setRegistrationSource('study_destination')
+    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 50)
+  }
+  return <div className="site">
+    <Header />
+    <main>
+      <section id="home" className="hero">
+        <div className="hero-shape shape-one" /><div className="hero-shape shape-two" />
+        <div className="container hero-grid">
+          <motion.div className="hero-copy" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
+            <span className="eyebrow"><Sparkles size={17} /> مستقبلك يبدأ بخطوة واثقة</span>
+            <h1>ابدأ رحلتك الجامعية<br /><em>بثقة مع وكالة الشيخ</em></h1>
+            <p>نساعدك في اختيار الجامعة والتخصص المناسب، وإكمال إجراءات القبول والتسجيل، ومتابعة رحلتك التعليمية خطوة بخطوة.</p>
+            <div className="hero-actions"><button className="btn primary" onClick={() => registerFor('')}>ابدأ التسجيل الآن</button><button className="btn secondary" onClick={() => document.getElementById('colleges')?.scrollIntoView({ behavior: 'smooth' })}>استكشف الكليات</button></div>
+            <div className="trust-row"><span><CheckCircle2 /> متابعة شخصية</span><span><CheckCircle2 /> معلومات واضحة</span><span><CheckCircle2 /> دعم سريع</span></div>
+          </motion.div>
+          <motion.div className="hero-visual" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .15 }}>
+            <GlobalStudyGlobe />
+            <div className="mini-stat"><strong>خطوة بخطوة</strong><span>من الاختيار حتى القبول</span></div>
+          </motion.div>
+        </div>
+        <div className="hero-wave" />
+      </section>
+
+      <section id="about" className="section about">
+        <div className="container about-grid">
+          <motion.div className="portrait-wrap" initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <div className="portrait-bg" /><img src={aliPhoto} alt="علي الشيخ، مؤسس وكالة الشيخ للخدمات التعليمية" />
+            <span className="portrait-badge"><Award /> خبرة من قلب بنغالور</span>
+          </motion.div>
+          <div className="about-copy">
+            <SectionTitle eyebrow="قصتي مع التعليم" title="من أنا؟" />
+            <h3>أنا علي الشيخ، رفيقك في الرحلة الجامعية.</h3>
+            <p>درست في مدينة بنغالور في الهند، ومن خلال تجربتي التعليمية ومعرفتي بالجامعات والكليات وإجراءات القبول، أسست وكالة الشيخ للخدمات التعليمية لمساعدة الطلاب على اتخاذ قرارات دراسية صحيحة وواضحة.</p>
+            <p>أدرك أن اختيار الجامعة والتخصص والسفر للدراسة قد يكون أمرًا صعبًا للطالب وأسرته؛ لذلك أقدم إرشادًا شخصيًا ومتابعة مستمرة منذ بداية الاختيار وحتى إتمام التسجيل والقبول.</p>
+            <div className="about-points">{['خبرة بالدراسة في الهند', 'متابعة شخصية للطالب', 'مساعدة في اختيار التخصص', 'دعم خلال إجراءات التسجيل'].map(x => <span key={x}><CheckCircle2 />{x}</span>)}</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="section services">
+        <div className="container">
+          <SectionTitle eyebrow="كيف نساعدك؟" title="خدمات مصممة لرحلتك التعليمية" text="كل ما تحتاج إليه لاتخاذ قرار واضح والبدء بثقة، في مكان واحد." />
+          <div className="service-grid">{services.map(([Icon, title, text], i) => <motion.article className="service-card" key={String(title)} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * .05 }} viewport={{ once: true }}><span className="service-icon"><Icon /></span><h3>{String(title)}</h3><p>{String(text)}</p><span className="service-index">٠{i + 1}</span></motion.article>)}</div>
+        </div>
+      </section>
+
+      <StudyDestinationsSection onRegister={registerForDestination} />
+
+      <section id="english-test" className="section test-promo"><div className="container"><motion.div className="test-promo-card" initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}><div><span className="eyebrow">اختبار مصغر مستوحى من مهارات اختبارات اللغة الدولية</span><h2>اعرف مستواك في اللغة الإنجليزية</h2><p>اختبر مهاراتك في الاستماع والكتابة خلال 8 دقائق، واحصل على تقييم مبدئي لمستواك ونصائح تساعدك على التطور.</p><div className="test-promo-facts"><span>🎧 الاستماع</span><span>✍️ الكتابة</span><span>⏱ 8 دقائق</span></div><Link className="btn primary" to="/english-test">ابدأ الاختبار</Link><small>الاختبار مجاني والنتيجة تقديرية.</small></div><div className="test-promo-art">Aa</div></motion.div></div></section>
+
+      <section className="section why">
+        <div className="container why-grid">
+          <div><SectionTitle eyebrow="لماذا نحن؟" title="لأن قرارك الدراسي يستحق عناية حقيقية" /><p className="lead">لا نقدم قائمة خيارات فقط؛ نستمع إليك ونبني معك مسارًا يناسب طموحك وظروفك.</p><a className="btn light" href="https://wa.me/919036102240" target="_blank" rel="noreferrer"><MessageCircle /> تحدث مع علي الآن</a></div>
+          <div className="benefit-grid">{benefits.map((b, i) => <div className="benefit" key={b}><strong>{String(i + 1).padStart(2, '0')}</strong><span>{b}</span></div>)}</div>
+        </div>
+      </section>
+
+      <section id="colleges" className="section colleges">
+        <div className="container">
+          <SectionTitle eyebrow="فرصتك تبدأ هنا" title="الكليات والجامعات" text="استكشف نماذج من المسارات المتاحة، وسنساعدك في التحقق من أحدث التفاصيل واختيار الأنسب." />
+          {loading && <div className="college-grid">{[1,2,3].map(x => <div className="skeleton" key={x} />)}</div>}
+          {error && <div className="empty-state"><p>حدث خطأ أثناء تحميل البيانات.</p><button className="btn primary" onClick={load}>إعادة المحاولة</button></div>}
+          {!loading && !error && colleges.length === 0 && <div className="empty-state">لا توجد كليات متاحة حاليًا.</div>}
+          {!loading && !error && <div className="college-grid">{colleges.map(c => <CollegeCard key={c.id} college={c} onDetails={() => setSelected(c)} onRegister={() => registerFor(c.name)} />)}</div>}
+        </div>
+      </section>
+
+      <section id="steps" className="section steps">
+        <div className="container"><SectionTitle eyebrow="مسار واضح" title="ست خطوات تفصل بينك وبين البداية" /><div className="steps-grid">{steps.map(([Icon, title, text], i) => <div className="step" key={String(title)}><span className="step-number">{i + 1}</span><div className="step-icon"><Icon /></div><h3>{String(title)}</h3><p>{String(text)}</p></div>)}</div></div>
+      </section>
+
+      <section id="contact" className="section contact">
+        <div className="container contact-grid">
+          <div className="contact-copy"><span className="eyebrow"><Sparkles /> خطوتك الأولى</span><h2>ابدأ طلب التسجيل</h2><p>أرسل بياناتك وسنتواصل معك لمساعدتك في اختيار الكلية والتخصص المناسب.</p><div className="contact-card"><BriefcaseBusiness /><div><strong>استشارة شخصية</strong><span>نفهم احتياجك قبل اقتراح الخيارات</span></div></div><div className="contact-card"><MessageCircle /><div><strong>تواصل سريع</strong><span>عبر واتساب على +91 9036102240</span></div></div></div>
+          <RegistrationForm selectedCollege={selectedName} selectedCourse={englishCourse ? 'دورة اللغة الإنجليزية' : ''} selectedCountry={selectedCountry} source={registrationSource} assessmentAttemptId={englishCourse ? getStoredSession()?.attemptId : undefined} />
+        </div>
+      </section>
+    </main>
+    <Footer /><WhatsAppButton />
+    <CollegeModal college={selected} onClose={() => setSelected(null)} onRegister={() => registerFor(selected?.name || '')} />
+  </div>
+}
