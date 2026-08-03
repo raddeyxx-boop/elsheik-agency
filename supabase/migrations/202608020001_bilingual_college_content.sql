@@ -1,0 +1,10 @@
+begin;
+alter table public.colleges add column if not exists name_en text;
+alter table public.colleges add column if not exists short_description_en text;
+alter table public.colleges add column if not exists description_en text;
+alter table public.colleges add column if not exists location_en text;
+alter table public.college_courses add column if not exists name_en text;
+alter table public.college_courses add column if not exists description_en text;
+alter table public.college_courses add column if not exists duration_en text;
+alter table public.college_courses add column if not exists degree_type_en text;
+commit;

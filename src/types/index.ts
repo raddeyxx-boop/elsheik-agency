@@ -2,17 +2,25 @@ export type Course = {
   id?: string
   college_id?: string
   name: string
+  name_en?: string | null
   description?: string
+  description_en?: string | null
   duration?: string
+  duration_en?: string | null
   degree_type?: string
+  degree_type_en?: string | null
 }
 
 export type College = {
   id: string
   name: string
+  name_en?: string | null
   short_description: string
+  short_description_en?: string | null
   description: string
+  description_en?: string | null
   location?: string
+  location_en?: string | null
   website_url?: string
   image_url?: string
   is_active: boolean

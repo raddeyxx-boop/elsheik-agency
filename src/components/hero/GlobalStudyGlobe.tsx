@@ -4,8 +4,10 @@ import { studyFlights } from '../../data/studyFlights'
 import DestinationBadge from './DestinationBadge'
 import FlightPath from './FlightPath'
 import RealisticEarth from './RealisticEarth'
+import { usePreferences } from '../../context/PreferencesContext'
 
 export default function GlobalStudyGlobe() {
+  const {t}=usePreferences()
   const [activeFlight, setActiveFlight] = useState<string | null>(null)
   const clearTimer = useRef<number | null>(null)
   const reducedMotion = Boolean(useReducedMotion())
@@ -30,7 +32,7 @@ export default function GlobalStudyGlobe() {
   }, [])
 
   return (
-    <div className={`global-study-globe${activeFlight ? ' has-active-flight' : ''}`} aria-label="وجهاتنا التعليمية حول العالم">
+    <div className={`global-study-globe${activeFlight ? ' has-active-flight' : ''}`} aria-label={t('destinations.globalTitle')}>
       <div className="globe-atmosphere" aria-hidden="true" />
       <div className="real-flight-layer behind">
         {studyFlights.filter((flight) => flight.depth === 'behind').map((flight) => <FlightPath key={flight.id} flight={flight} active={activeFlight === flight.id} reducedMotion={reducedMotion} />)}

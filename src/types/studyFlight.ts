@@ -1,7 +1,8 @@
 export interface StudyFlight {
   id: string
-  labelAr: string
-  destinationAr: string
+  nameKey: string
+  flightLabelKey: string
+  viewLabelKey: string
   duration: number
   delay: number
   accent: 'purple' | 'blue' | 'green'

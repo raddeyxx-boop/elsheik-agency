@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import AdminLoginPage from './pages/AdminLoginPage'
 import AdminDashboardPage from './pages/AdminDashboardPage'
@@ -14,9 +14,12 @@ import EnglishTestExamPage from './pages/EnglishTestExamPage'
 import EnglishTestResultPage from './pages/EnglishTestResultPage'
 import AdminEnglishTestPage from './pages/AdminEnglishTestPage'
 import EnglishTestErrorBoundary from './components/errors/EnglishTestErrorBoundary'
+import PreferenceControls from './components/PreferenceControls'
+
+function GlobalPreferences(){ const {pathname}=useLocation(); return pathname==='/'?null:<div className="global-preferences"><PreferenceControls /></div> }
 
 export default function App() {
-  return <BrowserRouter><AuthProvider><Routes>
+  return <BrowserRouter><AuthProvider><GlobalPreferences/><Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/english-test" element={<EnglishTestErrorBoundary><EnglishTestStartPage /></EnglishTestErrorBoundary>} />
     <Route path="/english-test/exam" element={<EnglishTestErrorBoundary><EnglishTestExamPage /></EnglishTestErrorBoundary>} />
