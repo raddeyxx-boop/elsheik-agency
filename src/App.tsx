@@ -15,12 +15,14 @@ import EnglishTestResultPage from './pages/EnglishTestResultPage'
 import AdminEnglishTestPage from './pages/AdminEnglishTestPage'
 import EnglishTestErrorBoundary from './components/errors/EnglishTestErrorBoundary'
 import PreferenceControls from './components/PreferenceControls'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 function GlobalPreferences(){ const {pathname}=useLocation(); return pathname==='/'?null:<div className="global-preferences"><PreferenceControls /></div> }
 
 export default function App() {
   return <BrowserRouter><AuthProvider><GlobalPreferences/><Routes>
     <Route path="/" element={<HomePage />} />
+    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
     <Route path="/english-test" element={<EnglishTestErrorBoundary><EnglishTestStartPage /></EnglishTestErrorBoundary>} />
     <Route path="/english-test/exam" element={<EnglishTestErrorBoundary><EnglishTestExamPage /></EnglishTestErrorBoundary>} />
     <Route path="/english-test/result/:attemptId" element={<EnglishTestErrorBoundary><EnglishTestResultPage /></EnglishTestErrorBoundary>} />

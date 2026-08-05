@@ -36,6 +36,33 @@ body,header,main,section,footer,aside,article,div,input,textarea,select,button,a
 @media(max-width:640px){.hero-visual{overflow:visible}.global-study-globe{width:340px;height:350px;max-width:100%}.earth{width:225px;height:225px}.globe-atmosphere{width:245px;height:245px}.globe-destination-badge{min-height:34px;padding:6px 8px;border-radius:11px;font-size:9px}.globe-destination-badge>svg{width:13px}.globe-destination-badge.top-right{right:3px;top:32px}.globe-destination-badge.middle-right{right:0;top:150px}.globe-destination-badge.bottom-right{right:13px;bottom:28px}.globe-destination-badge.top-left{left:4px;top:48px}.globe-destination-badge.middle-left{left:0;top:172px}.globe-destination-badge.bottom-left{left:10px;bottom:12px}.globe-destination-tooltip{max-width:145px;white-space:normal}.globe-fallback-label{bottom:48px;font-size:8px}.flight-plane{width:20px;height:20px}.flight-plane svg{width:12px}}
 @media(prefers-reduced-motion:reduce){.earth-map-track,.flight-orbit,.destination-marker,.globe-atmosphere{animation:none!important}.flight-orbit{opacity:.65}}
 
+/* Privacy policy */
+.privacy-page{min-height:100vh;background:radial-gradient(circle at 85% 0,#efeaff 0,transparent 25%),var(--background);color:var(--text-primary)}
+.privacy-header{border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px)}
+.privacy-nav{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.privacy-brand{display:flex;align-items:center;gap:10px;color:var(--navy)}
+.privacy-brand img{width:64px;height:64px;object-fit:contain}
+.privacy-brand span{font-size:17px;font-weight:800;line-height:1.25}
+.privacy-brand small{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:600}
+.privacy-home-link{padding:10px 16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--navy);font-size:13px;font-weight:700}
+.privacy-home-link:hover{border-color:var(--purple);color:var(--purple)}
+.privacy-main{padding:80px 0 105px}
+.privacy-container{width:min(880px,calc(100% - 40px))}
+.privacy-heading{text-align:center;margin-bottom:36px}
+.privacy-heading>span{display:inline-block;padding:7px 13px;border-radius:999px;background:#ece9ff;color:var(--purple);font-size:12px;font-weight:800}
+.privacy-heading h1{margin:12px 0 4px;color:var(--navy);font-size:clamp(36px,6vw,54px);line-height:1.25}
+.privacy-heading p{margin:0;color:var(--muted);font-size:13px}
+.privacy-card{padding:clamp(26px,5vw,54px);border:1px solid var(--border);border-radius:26px;background:var(--surface);box-shadow:var(--shadow)}
+.privacy-card>p:first-child{margin-top:0;font-size:16px}
+.privacy-card section{padding-top:30px;margin-top:30px;border-top:1px solid var(--border)}
+.privacy-card h2{margin:0 0 12px;color:var(--navy);font-size:21px;line-height:1.4}
+.privacy-card p,.privacy-card li{color:var(--text-secondary);font-size:14px;line-height:1.9}
+.privacy-card p{margin:10px 0}
+.privacy-card ul{margin:12px 0 0;padding-left:22px}
+.privacy-card li{padding-left:4px;margin:4px 0}
+.privacy-card a{color:var(--purple);font-weight:700;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+@media(max-width:640px){.privacy-nav{min-height:75px}.privacy-brand img{width:54px;height:54px}.privacy-brand span{font-size:14px}.privacy-home-link{padding:8px 12px}.privacy-main{padding:55px 0 75px}.privacy-container{width:min(100% - 28px,880px)}.privacy-card{border-radius:20px}.privacy-card section{padding-top:24px;margin-top:24px}.privacy-card h2{font-size:19px}}
+
 /* Real point-to-point flight routes */
 .earth-map-track{animation-duration:40s}.real-flight-layer{position:absolute;inset:0;width:520px;height:470px;pointer-events:none}.real-flight-layer.behind{z-index:1}.real-flight-layer.front{z-index:3}.real-flight-route{position:absolute;inset:0;color:var(--purple)}.real-flight-route.accent-blue{color:var(--blue)}.real-flight-route.accent-green{color:var(--green)}.real-flight-route svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.real-flight-route svg path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:0 1;opacity:0;filter:drop-shadow(0 0 3px currentColor);animation:route-draw var(--route-duration) cubic-bezier(.42,0,.25,1) var(--route-delay) infinite}.route-airplane{position:absolute;z-index:2;left:0;top:0;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;color:currentColor;box-shadow:0 5px 16px #152c6655;offset-path:var(--flight-path);offset-rotate:auto 42deg;animation:airplane-route var(--route-duration) cubic-bezier(.42,0,.25,1) var(--route-delay) infinite;will-change:offset-distance,opacity,transform}.route-airplane svg{position:static;width:17px;height:17px;overflow:visible}.depth-behind .route-airplane{opacity:.65;box-shadow:0 3px 10px #152c6638}.real-flight-route.active svg path{stroke-width:3;filter:drop-shadow(0 0 7px currentColor)}.real-flight-route.active .route-airplane{width:34px;height:34px;box-shadow:0 0 0 6px #fff5,0 5px 22px currentColor}.real-flight-route.reduced svg path{stroke-dasharray:.12 .12;opacity:.45;animation:none}
 @keyframes route-draw{0%{stroke-dasharray:0 1;stroke-dashoffset:0;opacity:0}8%{opacity:.25}18%{stroke-dasharray:.16 1;opacity:.8}72%{stroke-dasharray:.7 1;opacity:.85}91%{stroke-dasharray:.08 1;stroke-dashoffset:-.92;opacity:.35}100%{stroke-dasharray:0 1;stroke-dashoffset:-1;opacity:0}}@keyframes airplane-route{0%{offset-distance:0%;opacity:0;transform:scale(.75)}8%{opacity:1;transform:scale(.9)}48%{transform:scale(1)}88%{opacity:1;transform:scale(.9)}96%,100%{offset-distance:100%;opacity:0;transform:scale(.72)}}
